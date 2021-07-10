@@ -28,20 +28,20 @@ export class AppComponent implements OnInit{
     this.http.changeStatus(projectId, todoId,isCompleted);
   }
 
-  async openDialog() {
+  openDialog() {
     const dialogConfig:MatDialogConfig = new MatDialogConfig();
     dialogConfig.data = {
       projects: this.projects
     };
     const dialogRef = this.dialog.open(DialogComponent, dialogConfig);
     dialogRef.afterClosed().subscribe((data)=>{
-    if (data){ 
-        this.http.getUpdate().subscribe((data: Project[]) => this.update = data);
-        if (this.update.length != 0){
-          console.log(this.update);
-          this.updateProjects()      
-        }
-    }});
+      if (data){ 
+          this.http.getUpdate().subscribe((data: Project[]) => this.update = data);
+          if (this.update.length != 0){
+            this.updateProjects()      
+          }
+      }
+    });
   }
 
   updateProjects(){
