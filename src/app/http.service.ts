@@ -44,16 +44,8 @@ export class HttpService {
     });
   }
 
-  updateProjects(projects:Project[]):Observable<Project[]>{
-    if (this.todo[0].id <= projects.length){
-      projects.map((e)=>{
-        if (e.id === this.todo[0].id){
-          e.todos.push(...this.todo[0].todos)}
-        return e});      
-    } else {
-      projects.push(...this.todo)
-    }
-    return of (projects);
+  getUpdate():Observable<Project[]>{
+    return of(this.todo);
   }
 
   transform(data:any,value:Project[]){

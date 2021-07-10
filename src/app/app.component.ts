@@ -17,6 +17,8 @@ export class AppComponent implements OnInit{
               private http: HttpService){}
 
   projects:Project[] = [];
+  update: Project[] = [];
+
   
   ngOnInit(){
     this.http.getProjects().subscribe((data: Project[]) => this.projects = data);
@@ -26,16 +28,33 @@ export class AppComponent implements OnInit{
     this.http.changeStatus(projectId, todoId,isCompleted);
   }
 
-  openDialog() {
+  async openDialog() {
     const dialogConfig:MatDialogConfig = new MatDialogConfig();
     dialogConfig.data = {
       projects: this.projects
     };
     const dialogRef = this.dialog.open(DialogComponent, dialogConfig);
-    dialogRef.afterClosed().subscribe(() =>{
-      this.http.updateProjects(this.projects).subscribe((data: Project[]) => this.projects = data);
-    });
+    dialogRef.afterClosed().subscribe((data)=>{
+    if (data){ 
+        this.http.getUpdate().subscribe((data: Project[]) => this.update = data);
+        if (this.update.length != 0){
+          console.log(this.update);
+          this.updateProjects()      
+        }
+    }});
   }
+
+  updateProjects(){
+    if (this.update[0].id <= this.projects.length){
+      this.projects.map((e)=>{
+        if (e.id === this.update[0].id){
+          e.todos.push(...this.update[0].todos)}
+        return e}
+        );      
+    } else {
+      this.projects.push(...this.update)
+    }
+  }  
 
   trackByProjects(index:number, item:Project) {
     return index;
