@@ -38,6 +38,7 @@ export class AppComponent implements OnInit{
       if (data){ 
           this.http.getUpdate().subscribe((data: Project[]) => this.update = data);
           if (this.update.length != 0){
+            console.log(this.update)
             this.updateProjects()      
           }
       }
