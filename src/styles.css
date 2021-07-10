@@ -1,0 +1,33 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+
+.span {
+    margin: auto;
+}
+
+.strikethrough {
+  text-decoration: line-through;
+}
+
+
+.full-width {
+  width: 100%;
+}
+
+.mat-raised-button {
+  width: 50%;
+}
+
+
+
+.mat-checkbox-layout{
+white-space: normal !important;
+
+}
+.mat-checkbox-inner-container{
+    margin-top: 4px;
+}

@@ -1,0 +1,42 @@
+<h2 mat-dialog-title align="center">Новая задача</h2>
+
+<mat-dialog-content [formGroup]="form">  
+  <mat-form-field class="full-width">
+    <input  matInput placeholder="Название задачи..."
+            formControlName="newToDo"
+            #message maxlength="100">
+    <mat-hint align="end">{{message.value.length}} / 100
+    </mat-hint>       
+  </mat-form-field>
+
+  <mat-form-field class="full-width">  
+    <mat-label>Категория</mat-label>
+    <mat-select formControlName="projectName">
+        <mat-option  
+          *ngFor="let project of projectsTitle" 
+          [value]="project"
+          (click)=isExistProjectName()>
+          {{project}}
+        </mat-option>
+    </mat-select>
+  </mat-form-field> 
+
+  <mat-form-field class="full-width" 
+                  *ngIf="toggle">
+    <input matInput placeholder="Название категории..."
+           formControlName="newProjectName"
+           #message maxlength="20">
+    <mat-hint align="end">{{message.value.length}} / 20
+    </mat-hint> 
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="center">
+    <button class="mat-raised-button"(click)="close()">Отмена</button>
+    <button class="mat-raised-button mat-primary"
+            (click)="save()">ОК
+    </button>
+</mat-dialog-actions>
+
+
+
