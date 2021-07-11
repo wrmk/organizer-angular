@@ -11,7 +11,6 @@ export class Project {
   @Type(() => Todos)
   todos: Todos[];
 }
-
 export class Todos {
     id: number;
     text: string;

@@ -21,8 +21,7 @@ export class HttpService {
     // let projects: Project[] = [];
     const urlGet:string = `${this.Url}projects`;
     return this.http.get(urlGet).pipe(map(data => {
-      this.transform(data,this.projects);
-      return this.projects = plainToClass(Project, this.projects);
+      return this.transform(data,this.projects);
     }));
   }
 
@@ -40,9 +39,10 @@ export class HttpService {
       "title": projectName,
       "text": newToDo
     }).toPromise().then(data => {
-      this.transform(data,update);
-      this.update = plainToClass(Project,update);
-      this.updateProjects();
+      if (data){
+        this.update =this.transform(data,update);
+        this.updateProjects();
+      }
     });
   }
 
@@ -66,7 +66,7 @@ export class HttpService {
     for (let key in data)
     if (data.hasOwnProperty(key))
     value.push(data[key])
-    return value;
+    return value = plainToClass(Project,value);
   }
 
 }
