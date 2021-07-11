@@ -18,7 +18,6 @@ export class AppComponent implements OnInit{
   projects:Project[] = [];
   update: Project[] = [];
 
-  
   ngOnInit(){
     this.http.getProjects().subscribe((data: Project[]) => this.projects = data);
   }
@@ -34,9 +33,7 @@ export class AppComponent implements OnInit{
     };
     const dialogRef = this.dialog.open(DialogComponent, dialogConfig);
     dialogRef.afterClosed().subscribe((data)=>{
-      // if (data){ 
-          this.http.getUpdate().subscribe((data: Project[]) => this.projects = data);
-      // }
+      this.http.getUpdate().subscribe((data: Project[]) => this.projects = data);
     });
   }
 

@@ -18,7 +18,6 @@ export class HttpService {
   constructor(private http: HttpClient) { }
 
   getProjects():Observable<Project[]>{
-    // let projects: Project[] = [];
     const urlGet:string = `${this.Url}projects`;
     return this.http.get(urlGet).pipe(map(data => {
       return this.transform(data,this.projects);

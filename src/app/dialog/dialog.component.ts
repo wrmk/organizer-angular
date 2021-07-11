@@ -19,7 +19,6 @@ export class DialogComponent implements OnInit {
   projectsTitle: string[] = [];
   toggle: boolean = false;
  
-
   constructor(private fb: FormBuilder,
               private httpService: HttpService,
               private dialogRef: MatDialogRef<DialogComponent>,
