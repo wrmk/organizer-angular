@@ -4,7 +4,6 @@ import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import { HttpService } from './http.service';
 import { Project, Todos } from './project.service';
 
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -35,27 +34,11 @@ export class AppComponent implements OnInit{
     };
     const dialogRef = this.dialog.open(DialogComponent, dialogConfig);
     dialogRef.afterClosed().subscribe((data)=>{
-      if (data){ 
+      // if (data){ 
           this.http.getUpdate().subscribe((data: Project[]) => this.update = data);
-          if (this.update.length != 0){
-            console.log(this.update)
-            this.updateProjects()      
-          }
-      }
+      // }
     });
   }
-
-  updateProjects(){
-    if (this.update[0].id <= this.projects.length){
-      this.projects.map((e)=>{
-        if (e.id === this.update[0].id){
-          e.todos.push(...this.update[0].todos)}
-        return e}
-        );      
-    } else {
-      this.projects.push(...this.update)
-    }
-  }  
 
   trackByProjects(index:number, item:Project) {
     return index;

@@ -12,16 +12,17 @@ import { Project } from './project.service';
 export class HttpService {
 
   Url:string = environment.Url;
-  todo:Project[] = [];
+  update:Project[] = [];
+  projects:Project[] = [];
 
   constructor(private http: HttpClient) { }
 
   getProjects():Observable<Project[]>{
-    let projects: Project[] = [];
+    // let projects: Project[] = [];
     const urlGet:string = `${this.Url}projects`;
     return this.http.get(urlGet).pipe(map(data => {
-      this.transform(data,projects);
-      return projects = plainToClass(Project, projects);
+      this.transform(data,this.projects);
+      return this.projects = plainToClass(Project, this.projects);
     }));
   }
 
@@ -34,19 +35,32 @@ export class HttpService {
 
   save(projectName:string, newToDo:string){
     const urlPost: string = `${this.Url}todos`;
-    let todo: Project[] = [];
+    let update: Project[] = [];
     this.http.post(urlPost,{
       "title": projectName,
       "text": newToDo
     }).toPromise().then(data => {
-      this.transform(data,todo);
-      this.todo = plainToClass(Project,todo);
+      this.transform(data,update);
+      this.update = plainToClass(Project,update);
+      this.updateProjects();
     });
   }
 
   getUpdate():Observable<Project[]>{
-    return of(this.todo);
+    return of(this.projects);
   }
+
+  updateProjects(){
+    if (this.update[0].id <= this.projects.length){
+      this.projects.map((e)=>{
+        if (e.id === this.update[0].id){
+          e.todos.push(...this.update[0].todos)}
+        return e}
+        );      
+    } else {
+      this.projects.push(...this.update)
+    }
+  } 
 
   transform(data:any,value:Project[]){
     for (let key in data)
